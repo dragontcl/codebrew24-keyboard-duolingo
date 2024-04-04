@@ -57,7 +57,7 @@ def loginpage():
     return
 @app.route('/register')
 def register():
-
+a
     return
 @app.route('/getUserData')
 def userdata():

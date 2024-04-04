@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/KBDuolingo.iml" filepath="$PROJECT_DIR$/.idea/KBDuolingo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/codebrew24-keyboard-duolingo.iml" filepath="$PROJECT_DIR$/.idea/codebrew24-keyboard-duolingo.iml" />
     </modules>
   </component>
 </project>

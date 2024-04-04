@@ -51,17 +51,15 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-@app.route('/login')
+@app.route('/api/login')
 def loginpage():
-
-    return
-@app.route('/register')
+    return "test"
+@app.route('/api/register')
 def register():
-    return
-@app.route('/getUserData')
+    return "test1"
+@app.route('/api/getUserData')
 def userdata():
-
-    return
+    return "test2"
 
 
 if __name__ == '__main__':

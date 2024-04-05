@@ -1,34 +1,31 @@
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Button, Form, Input, Card  } from 'antd';
-import './App.css'
+import { Button, Card } from 'antd';
+import './App.css';
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+const App: React.FC = () => {
+    const navigate = useNavigate(); // Initialize useNavigate
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
-// @ts-expect-error
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const boxStyle: React.CSSProperties = {
-    width: '100%',
-    height: 120,
-    borderRadius: 20,
-    border: '1px solid #40a9ff',
+    const handleLogin = () => {
+        navigate('/login'); // Use navigate for navigation
+    };
+
+    const handleSignup = () => {
+        navigate('/signup'); // Use navigate for navigation
+    };
+
+    return (
+        <div className="container">
+            <Card className="card">
+                <Button type="primary" className="button" onClick={handleLogin}>
+                    Login
+                </Button>
+                <Button type="primary" className="button" onClick={handleSignup}>
+                    Signup
+                </Button>
+            </Card>
+        </div>
+
+    );
 };
-
-
-
-const App: React.FC = () => (
-    <div className="container">
-        <Card className="card">
-            <Button type="primary" className="button">
-                Login
-            </Button>
-            <Button type="primary" className="button">
-                Signup
-            </Button>
-        </Card>
-    </div>
-);
 
 export default App;

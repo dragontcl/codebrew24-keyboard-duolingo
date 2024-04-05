@@ -1,10 +1,16 @@
 import os
-from flask import Flask, g, request, jsonify
+from flask import Flask, g, request, jsonify, session
 import sqlite3
+from flask_session import Session
+from flask_cors import CORS
+
+
 
 app = Flask(__name__)
 dbfile = "kbduo.db"
-
+app.config["SECRET_KEY"] = "8659a90c966afe6f67acc872f243a6e3ef7a1008fbec97bbd7ec5ce0218a60d0"  # Set a secret key for session encryption
+app.config["SESSION_TYPE"] = "filesystem"  # Configure session to use the filesystem for storage
+Session(app)
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -21,7 +27,8 @@ def get_db():
                 uid INTEGER PRIMARY KEY AUTOINCREMENT,
                 user TEXT NOT NULL UNIQUE,
                 pass TEXT NOT NULL,
-                global_error INTEGER DEFAULT 20
+                global_error INTEGER DEFAULT 20,
+                default_kb TEXT -- if null = qwerty
             );
             """)
             cur.execute("""
@@ -61,6 +68,7 @@ def login():
     user_pass = cur.fetchone()
     if user_pass and user_pass[0] == password:
         print(f"Login Username: {username}, Password: {password}")  # For demo purposes only
+        session['user_id'] = username+password  # Set user_id in session
         return jsonify({"message": "Login successful"}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
@@ -75,11 +83,23 @@ def register():
     try:
         cur.execute("INSERT INTO Users (user, pass) VALUES (?, ?)", (username, password))
         db.commit()
-        print(f"Registered Username: {username}, Password: {password}")  # For demo purposes only
+        print(f"Registered Username: {username}, Password: {password}")
+        session['user_id'] = username+password  # Set user_id in session        # For demo purposes only
         return jsonify({"message": "User registered successfully"}), 201
     except sqlite3.IntegrityError as e:
         return jsonify({"error": "Username or email already exists"}), 400
-
+@app.route('/api/session')
+def check_session():
+    user_id = session.get('user_id')
+    if user_id:
+        return jsonify({"isLoggedIn": True}), 200
+    else:
+        return jsonify({"isLoggedIn": False}), 401
+@app.route('/api/logout')
+def logout():
+    # Remove user_id from session
+    session.pop('user_id', None)
+    return 'Logged out'
 @app.route('/api/getUserData')
 def userdata():
     return "test2"

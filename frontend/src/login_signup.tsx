@@ -2,11 +2,11 @@ import {Form, Input, Button, Card, message } from 'antd';
 import './login_signup.css'
 //import {useNavigate} from "react-router-dom";
 
+
 type FieldType = {
     username?: string;
     password?: string;
     email?: string;
-
 };
 const LoginForm = () => {
     //const navigate = useNavigate();
@@ -17,6 +17,7 @@ const LoginForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify(values),
             });
 
@@ -80,6 +81,7 @@ const SignupForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify(values),
             });
 
@@ -91,6 +93,7 @@ const SignupForm = () => {
             // Handle success, such as saving the returned data or redirecting
             console.log(data); // Log the response data
             message.success('Signup successful');
+
             // navigate('/login'); // Optionally navigate to the login page
         } catch (error) {
             console.error('Failed to signup:', error);
@@ -135,5 +138,4 @@ const SignupForm = () => {
         </div>
     );
 }
-
 export { LoginForm, SignupForm };

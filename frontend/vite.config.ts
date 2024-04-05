@@ -11,7 +11,9 @@ export default defineConfig({
     proxy: {
       '/api/login': 'http://127.0.0.1:5000',
       '/api/register': 'http://127.0.0.1:5000',
-      '/api/getUserData': 'http://127.0.0.1:5000'
+      '/api/getUserData': 'http://127.0.0.1:5000',
+      '/api/logout': 'http://127.0.0.1:5000',
+      '/api/session': 'http://127.0.0.1:5000'
     }
   }
 })

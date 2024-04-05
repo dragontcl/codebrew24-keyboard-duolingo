@@ -1,6 +1,4 @@
 /* Then make the buttons either, 100% of the width, or display:block. */
-
-
 .container {
   display: flex;
   justify-content: center;

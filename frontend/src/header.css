@@ -1,0 +1,8 @@
+.app-header {
+    background-color: #d9d8cc;
+    padding: 10px 50px;
+}
+.app-header .ant-btn-link {
+    margin-right: 10px; /* Optional: adds space between buttons */
+    font-size: 16px; /* Set the font size for the buttons */
+}

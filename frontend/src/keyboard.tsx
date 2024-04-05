@@ -1,39 +1,8 @@
 import { useState } from 'react';
-    import { Button } from 'antd';
+import { Button } from 'antd';
 import './dashboard.css';
 import { useEffect } from 'react';
 import './keyboard.css'
-type KoreanMapping = {
-    [key: string]: string;
-};
-export const koreanMapping: KoreanMapping  = {
-    'q': 'ㅂ', 'Q': 'ㅃ',
-    'w': 'ㅈ', 'W': 'ㅉ',
-    'e': 'ㄷ', 'E': 'ㄸ',
-    'r': 'ㄱ', 'R': 'ㄲ',
-    't': 'ㅅ', 'T': 'ㅆ',
-    'y': 'ㅛ', 'Y':'ㅛ',
-    'u': 'ㅕ', 'U':'ㅕ',
-    'i': 'ㅑ', 'I':'ㅑ',
-    'o': 'ㅐ', 'O': 'ㅒ',
-    'p': 'ㅔ', 'P': 'ㅖ',
-    'a': 'ㅁ','A': 'ㅁ',
-    's': 'ㄴ','S': 'ㄴ',
-    'd': 'ㅇ','D': 'ㅇ',
-    'f': 'ㄹ','F': 'ㄹ',
-    'g': 'ㅎ', 'G': 'ㅎ',
-    'h': 'ㅗ','H': 'ㅗ',
-    'j': 'ㅓ', 'J': 'ㅓ',
-    'k': 'ㅏ','K': 'ㅏ',
-    'l': 'ㅣ','L': 'ㅣ',
-    'z': 'ㅋ','Z': 'ㅋ',
-    'x': 'ㅌ','X': 'ㅌ',
-    'c': 'ㅊ','C': 'ㅊ',
-    'v': 'ㅍ','V': 'ㅍ',
-    'b': 'ㅠ','B':'ㅠ',
-    'n': 'ㅜ','N':'ㅜ',
-    'm': 'ㅡ','M':'ㅡ'
-};
 const Keyboard = () => {
     const [isCapsLock, setIsCapsLock] = useState(false);
     const [isShift, setIsShift] = useState(false);
@@ -78,7 +47,37 @@ const Keyboard = () => {
         ['SHIFT', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'SHIFT'],
         ['SPACE']
     ];
-
+    type KoreanMapping = {
+        [key: string]: string;
+    };
+    const koreanMapping: KoreanMapping  = {
+        'q': 'ㅂ', 'Q': 'ㅃ',
+        'w': 'ㅈ', 'W': 'ㅉ',
+        'e': 'ㄷ', 'E': 'ㄸ',
+        'r': 'ㄱ', 'R': 'ㄲ',
+        't': 'ㅅ', 'T': 'ㅆ',
+        'y': 'ㅛ', 'Y':'ㅛ',
+        'u': 'ㅕ', 'U':'ㅕ',
+        'i': 'ㅑ', 'I':'ㅑ',
+        'o': 'ㅐ', 'O': 'ㅒ',
+        'p': 'ㅔ', 'P': 'ㅖ',
+        'a': 'ㅁ','A': 'ㅁ',
+        's': 'ㄴ','S': 'ㄴ',
+        'd': 'ㅇ','D': 'ㅇ',
+        'f': 'ㄹ','F': 'ㄹ',
+        'g': 'ㅎ', 'G': 'ㅎ',
+        'h': 'ㅗ','H': 'ㅗ',
+        'j': 'ㅓ', 'J': 'ㅓ',
+        'k': 'ㅏ','K': 'ㅏ',
+        'l': 'ㅣ','L': 'ㅣ',
+        'z': 'ㅋ','Z': 'ㅋ',
+        'x': 'ㅌ','X': 'ㅌ',
+        'c': 'ㅊ','C': 'ㅊ',
+        'v': 'ㅍ','V': 'ㅍ',
+        'b': 'ㅠ','B':'ㅠ',
+        'n': 'ㅜ','N':'ㅜ',
+        'm': 'ㅡ','M':'ㅡ'
+    };
 
 
     const renderKey = (key: string) => {
@@ -130,5 +129,4 @@ const Keyboard = () => {
     );
 };
 
-//export default Keyboard;
-export default {Keyboard}
+export default Keyboard;

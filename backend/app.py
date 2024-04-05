@@ -52,8 +52,9 @@ def close_connection(exception):
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
+    data = request.json  # Parse request data from JSON
+    username = data.get('username')
+    password = data.get('password')
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT pass FROM Users WHERE user = ?", (username,))
@@ -63,14 +64,16 @@ def login():
         return jsonify({"message": "Login successful"}), 200
     else:
         return jsonify({"error": "Invalid username or password"}), 401
+
 @app.route('/api/register', methods=['POST'])
 def register():
-    username = request.form['username']
-    password = request.form['password']
+    data = request.json  # Parse request data from JSON
+    username = data.get('username')
+    password = data.get('password')
     db = get_db()
     cur = db.cursor()
     try:
-        cur.execute("INSERT INTO Users (user, pass, email) VALUES (?, ?, ?)", (username, password, email))
+        cur.execute("INSERT INTO Users (user, pass) VALUES (?, ?)", (username, password))
         db.commit()
         print(f"Registered Username: {username}, Password: {password}")  # For demo purposes only
         return jsonify({"message": "User registered successfully"}), 201
@@ -85,4 +88,5 @@ def userdata():
 def initDB():
     get_db() # initialize db at the start
 if __name__ == '__main__':
+    print("hasdasd")
     app.run()

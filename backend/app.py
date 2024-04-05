@@ -1,5 +1,5 @@
 import os
-from flask import Flask, g, render_template
+from flask import Flask, g, request, jsonify
 import sqlite3
 
 app = Flask(__name__)
@@ -21,7 +21,6 @@ def get_db():
                 uid INTEGER PRIMARY KEY AUTOINCREMENT,
                 user TEXT NOT NULL UNIQUE,
                 pass TEXT NOT NULL,
-                email TEXT NOT NULL UNIQUE
                 global_error INTEGER DEFAULT 20
             );
             """)
@@ -51,17 +50,39 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-@app.route('/api/login')
-def loginpage():
-    return "test"
-@app.route('/api/register')
+@app.route('/api/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT pass FROM Users WHERE user = ?", (username,))
+    user_pass = cur.fetchone()
+    if user_pass and user_pass[0] == password:
+        print(f"Login Username: {username}, Password: {password}")  # For demo purposes only
+        return jsonify({"message": "Login successful"}), 200
+    else:
+        return jsonify({"error": "Invalid username or password"}), 401
+@app.route('/api/register', methods=['POST'])
 def register():
-    return "test1"
+    username = request.form['username']
+    password = request.form['password']
+    db = get_db()
+    cur = db.cursor()
+    try:
+        cur.execute("INSERT INTO Users (user, pass, email) VALUES (?, ?, ?)", (username, password, email))
+        db.commit()
+        print(f"Registered Username: {username}, Password: {password}")  # For demo purposes only
+        return jsonify({"message": "User registered successfully"}), 201
+    except sqlite3.IntegrityError as e:
+        return jsonify({"error": "Username or email already exists"}), 400
+
 @app.route('/api/getUserData')
 def userdata():
     return "test2"
 
-
-if __name__ == '__main__':
+@app.before_request
+def initDB():
     get_db() # initialize db at the start
+if __name__ == '__main__':
     app.run()

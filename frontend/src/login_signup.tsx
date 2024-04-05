@@ -32,6 +32,8 @@ const LoginForm = () => {
             message.error('Login failed. Please try again.');
         }
     };
+
+
     return (
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
             <Card
@@ -71,6 +73,30 @@ const LoginForm = () => {
     );
 }
 const SignupForm = () => {
+    const onFinishSignup = async (values: any) => {
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            });
+
+            if (!response.ok) {
+                throw new Error('Signup failed');
+            }
+
+            const data = await response.json();
+            // Handle success, such as saving the returned data or redirecting
+            console.log(data); // Log the response data
+            message.success('Signup successful');
+            // navigate('/login'); // Optionally navigate to the login page
+        } catch (error) {
+            console.error('Failed to signup:', error);
+            message.error('Signup failed. Please try again.');
+        }
+    };
     return (
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
             <Card
@@ -82,6 +108,7 @@ const SignupForm = () => {
             >
                 <Form name="signup"
                       requiredMark='optional'
+                      onFinish={onFinishSignup}
                 >
                     <Form.Item<FieldType>
                         name="username"

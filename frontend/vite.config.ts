@@ -9,9 +9,9 @@ export default defineConfig({
     port: 3000,
     cors: true,
     proxy: {
-      '/api/login': 'http://localhost:5000',
-      '/api/register': 'http://localhost:5000',
-      '/api/getUserData': 'http://localhost:5000'
+      '/api/login': 'http://127.0.0.1:5000',
+      '/api/register': 'http://127.0.0.1:5000',
+      '/api/getUserData': 'http://127.0.0.1:5000'
     }
   }
 })

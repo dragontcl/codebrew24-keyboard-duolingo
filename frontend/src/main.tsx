@@ -5,7 +5,7 @@ import App from './App';
 import {LoginForm, SignupForm} from './login_signup';
 import {DashboardForm} from "./dashboard";
 import {AccountInfoForm} from "./accountInfo.tsx";
-import Keyboard from "./keyboard.tsx"
+import KrDemoForm1 from "./koreanDemo1.tsx";
 // @ts-ignore
 ReactDOM.render(
     <Router>
@@ -17,7 +17,7 @@ ReactDOM.render(
                    element={<DashboardForm/>}/>
             <Route path="/account"
                    element={<AccountInfoForm/>}/>
-            <Route path="/demo1" element={<Keyboard/>}/>
+            <Route path="/demo1" element={<KrDemoForm1/>}/>
         </Routes>
     </Router>,
     document.getElementById('root')

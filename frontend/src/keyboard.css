@@ -1,0 +1,7 @@
+.qwerty-char {
+    font-size: 10px; /* small size for the sub-layout */
+    color: grey; /* a color that differentiates it from the main character */
+    position: absolute; /* to position it inside the key element */
+    bottom: 5px; /* distance from the bottom of the key */
+    right: 5px; /* distance from the right of the key */
+}

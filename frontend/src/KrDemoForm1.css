@@ -1,0 +1,26 @@
+/* Assuming .centerHorizontal is defined and centers horizontally */
+/* New container for the card and keyboard */
+.card-keyboard-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.responsive-card {
+    width: 100%; /* Make the card responsive */
+    max-width: 720px; /* Adjust this to match your keyboard's width or as desired */
+    margin-bottom: 20px; /* Space between card and keyboard */
+}
+.card-word {
+    text-align: center;
+    font-size: 24px;
+}/* Adjust this container to ensure it's centered and doesn't overflow */
+.card-characters {
+    text-align: center;
+    font-size: 24px;
+}/* Adjust this container to ensure it's centered and doesn't overflow */
+.content-container {
+
+}
+.custom-keyboard-spacing {
+    margin-top: 20px; /* Space above the keyboard */
+}

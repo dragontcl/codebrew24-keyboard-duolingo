@@ -1,0 +1,14 @@
+.ant-input-password{
+    border-width: 1px;
+    border-color: #747474;
+}
+.ant-input{
+    border-width: 1px;
+    border-color: #747474;
+}
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

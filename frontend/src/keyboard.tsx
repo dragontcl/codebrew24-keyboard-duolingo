@@ -140,9 +140,21 @@ export const KeyboardSequence = ({ characterSequence, showKB, onComplete }):Reac
     const [pressedKeys, setPressedKeys] = useState<Record<string, boolean>>({});
     const [sequencePosition, setSequencePosition] = useState(0);
     const [sequenceStatus, setSequenceStatus] = useState(Array(characterSequence.length).fill('unattempted'));
+    const [totalIncorrectAttempts, setTotalIncorrectAttempts] = useState(0); // New state to track incorrect attempts
+
+    useEffect(() => {
+        // Dependency on characterSequence to reset incorrect attempts on sequence change
+        setTotalIncorrectAttempts(0); // Reset on character sequence change
+    }, [characterSequence]);
+
+
     useEffect(() => {
         setSequenceStatus(Array(characterSequence.length).fill('unattempted'));
     }, [characterSequence]); // Depend on characterSequence to update accordingly
+    useEffect(() => {
+        // Update the incorrect input count based on sequenceStatus
+    }, [sequenceStatus]); // React to changes in sequenceStatus
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             const key = e.key.toLowerCase();
@@ -157,6 +169,7 @@ export const KeyboardSequence = ({ characterSequence, showKB, onComplete }):Reac
                     setSequencePosition(sequencePosition + 1);
                 }
             } else {
+                setTotalIncorrectAttempts(prev => prev + 1); // Increment for every incorrect key press
                 updateSequenceStatus(sequencePosition, 'incorrect');
             }
 
@@ -230,9 +243,26 @@ export const KeyboardSequence = ({ characterSequence, showKB, onComplete }):Reac
         if (status === 'incorrect' && key.toLowerCase() === correctKey) {
             keyStyle = { ...keyStyle, backgroundColor: '#FF3357', border: '2px solid darkred' }; // Highlight as incorrect
         }
+        const handleClick = () => {
+            // Determine if the clicked key is correct
+            const currentChar = characterSequence[sequencePosition]?.toLowerCase();
+            const correctKey = Object.keys(koreanMapping).find(k => koreanMapping[k] === currentChar);
+            if (key.toLowerCase() === correctKey) {
+                // Handle correct key press
+                updateSequenceStatus(sequencePosition, 'correct');
+                if (sequencePosition < characterSequence.length - 1) {
+                    setSequencePosition(sequencePosition + 1);
+                }
+            } else {
+                // Handle incorrect key press
+                setTotalIncorrectAttempts(prev => prev + 1);
+                updateSequenceStatus(sequencePosition, 'incorrect');
+            }
+        };
+
 
         return (
-            <Button key={key} onClick={() => {}} style={keyStyle}>
+            <Button key={key} onClick={handleClick} style={keyStyle}>
                 {!isSpecialKey && (
                     <div style={{ position: 'absolute', bottom: '5px', right: '5px', fontSize: '12px', color: 'grey' }}>
                         {character}
@@ -281,7 +311,7 @@ export const KeyboardSequence = ({ characterSequence, showKB, onComplete }):Reac
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             {renderCharacterCard()}
-            {showKB && (
+            {(showKB || totalIncorrectAttempts >= 5) &&  (
                 <div className="custom-keyboard-spacing">
                     {keys.map((row, rowIndex) => (
                         <div key={rowIndex} style={{display: 'flex', justifyContent: 'center', marginBottom: '8px'}}>

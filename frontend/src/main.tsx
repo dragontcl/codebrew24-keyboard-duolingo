@@ -10,13 +10,13 @@ import KrDemoForm1 from "./koreanDemo1.tsx";
 ReactDOM.render(
     <Router>
         <Routes>
-            <Route path="/" element={<App />} />
+            <Route path="/" element={<DashboardForm />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm/>}/>
             <Route path="/dashboard"
                    element={<DashboardForm/>}/>
-            <Route path="/account"
-                   element={<AccountInfoForm/>}/>
+             <Route path="/account"
+                   element={<DashboardForm/>}/>
             <Route path="/demo1" element={<KrDemoForm1/>}/>
         </Routes>
     </Router>,

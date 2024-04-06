@@ -1,6 +1,6 @@
 import './dashboard.css';
 import AppHeader from './header.tsx';
-import Keyboard from "./keyboard.tsx";
+import {Keyboard, KeyboardSequence} from "./keyboard.tsx";
 import { Card } from 'antd';
 import './KrDemoForm1.css'
 const KrDemoForm1 = () => {
@@ -14,15 +14,7 @@ const KrDemoForm1 = () => {
                             <p>김치</p>
                         </div>
                     </Card>
-                    <Card>
-                        <div className="card-characters">
-                            <p>ㄱㅣㅁㅊㅣ</p>
-                        </div>
-                    </Card>
-                    <div className="custom-keyboard-spacing">
-                         characterSequence={'ㄱㅣㅁㅊㅣ'}/>
-                    </div>
-                    <Keyboard/>
+                    <KeyboardSequence characterSequence="ㄱㅣㅁㅊㅣ" />
                 </Card>
             </div>
         </>

@@ -5,3 +5,6 @@
     bottom: 5px; /* distance from the bottom of the key */
     right: 5px; /* distance from the right of the key */
 }
+.custom-keyboard-spacing {
+    margin-top: 20px; /* Space above the keyboard */
+}

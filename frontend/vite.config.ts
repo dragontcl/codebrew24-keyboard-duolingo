@@ -7,7 +7,7 @@ export default defineConfig({
   //needed for frontend to communicate with backend
   server: {
     host: '0.0.0.0',
-    port: 3000,
+    port: 3909,
     cors: true,
     proxy: {
       '/api/login': 'http://127.0.0.1:5000',

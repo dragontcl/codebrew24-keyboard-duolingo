@@ -132,7 +132,7 @@ export const Keyboard = () => {
         </div>
     );
 };
-export const KeyboardSequence = ({ characterSequence  } ):ReactElement => {
+export const KeyboardSequence = ({ characterSequence, showKB, onComplete }):ReactElement => {
     const [currentCharacterIndex, setCurrentCharacterIndex] = useState(0);
     const [status, setStatus] = useState(Array(characterSequence.length).fill('pending'));
     const [isCapsLock, setIsCapsLock] = useState(false);
@@ -140,7 +140,9 @@ export const KeyboardSequence = ({ characterSequence  } ):ReactElement => {
     const [pressedKeys, setPressedKeys] = useState<Record<string, boolean>>({});
     const [sequencePosition, setSequencePosition] = useState(0);
     const [sequenceStatus, setSequenceStatus] = useState(Array(characterSequence.length).fill('unattempted'));
-
+    useEffect(() => {
+        setSequenceStatus(Array(characterSequence.length).fill('unattempted'));
+    }, [characterSequence]); // Depend on characterSequence to update accordingly
     useEffect(() => {
         const handleKeyDown = (e) => {
             const key = e.key.toLowerCase();
@@ -180,7 +182,18 @@ export const KeyboardSequence = ({ characterSequence  } ):ReactElement => {
     const updateSequenceStatus = (position, status) => {
         setSequenceStatus((prev) => prev.map((s, i) => (i === position ? status : s)));
     };
+    const resetInput = () => {
+        setSequencePosition(0);
+        setSequenceStatus(sequenceStatus.map(() => 'unattempted'));
+    };
+    useEffect(() => {
+        const allCorrect = sequenceStatus.every(status => status === 'correct');
 
+        if (allCorrect && onComplete) {
+            resetInput();
+            onComplete(); // Call onComplete callback instead of showing modal
+        }
+    }, [sequencePosition, characterSequence, sequenceStatus, onComplete]); // Make sure to include onComplete in the dependency array
 
 
     const renderKey = (key: string) => {
@@ -268,13 +281,16 @@ export const KeyboardSequence = ({ characterSequence  } ):ReactElement => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             {renderCharacterCard()}
-            <div className="custom-keyboard-spacing">
-                {keys.map((row, rowIndex) => (
-                    <div key={rowIndex} style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
-                        {row.map(renderKey)}
-                    </div>
-                ))}
-            </div>
+            {showKB && (
+                <div className="custom-keyboard-spacing">
+                    {keys.map((row, rowIndex) => (
+                        <div key={rowIndex} style={{display: 'flex', justifyContent: 'center', marginBottom: '8px'}}>
+                            {row.map(renderKey)}
+                        </div>
+                    ))}
+                </div>
+            )
+            }
 
         </div>
     );
